@@ -1,13 +1,13 @@
 {
     "discord": {
-        "token": "ODIwMzYyOTUwOTc1MTYwMzYw.YE0EiQ.cwvK37No51ZmizET27LENysgOjU",
-        "activity": "FORTNITE",
+        "token": "",
+        "activity": "",
         "prefix": "!",
         "logchannel": "851112396763168768"
     },
     "sql": {
-        "user": "etherbot",
-        "password": "ooip",
+        "user": "",
+        "password": "",
         "database": "www"
     },
     "web": {
