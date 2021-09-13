@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ether Panel</title>
+    <%- include('bootstrap/style.ejs') %>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+            }
+            
+            .grid-container {
+                display: grid;
+                grid-template-columns: 0.7fr 1.3fr 1.3fr 0.7fr;
+                grid-template-rows: 0.2fr 1.8fr 0.2fr;
+                gap: 0px 0px;
+                grid-template-areas: ". . . ."". TABLEAU TABLEAU ."". . . .";
+                height: 100%;
+            }
+            
+            .TABLEAU {
+                grid-area: TABLEAU;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('includes/sidebar.ejs') %>
+
+
+        <div class="grid-container">
+            <div class="TABLEAU">
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+                        Comptes sur le site
+                    </h3>
+                    <div class="card-body">
+                        <table id="dtBasicExample" class="table" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="th-sm">#
+                                    </th>
+                                    <th class="th-sm">Pseudo
+                                    </th>
+                                    <th class="th-sm">E-mail
+                                    </th>
+                                    <th class="th-sm">Discord
+                                    </th>
+                                    <th class="th-sm">BattleNet
+                                    </th>
+                                    <th class="th-sm">Formateur
+                                    </th>
+                                    <th class="th-sm">GTournois
+                                    </th>
+                                    <th class="th-sm">Admin
+                                    </th>
+                                    <th class="th-sm">Crée le
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% users.forEach(user => {%>
+                                    <tr>
+                                        <td>
+                                            <%= user.id%>
+                                        </td>
+                                        <td>
+                                            <%= user.username%>
+                                        </td>
+                                        <td>
+                                            <%= user.mail%>
+                                        </td>
+                                        <td>
+                                            <% if(user.DiscordID){%>
+                                                <%= (user.DiscordID)%>
+                                                    <%}else{%>
+                                                        -
+                                                        <%}%>
+                                        </td>
+                                        <td>
+                                            <% if(user.BattleTag){%>
+                                                <%= (user.BattleTag).replace('-','#')%>
+                                                    <%}else{%>
+                                                        -
+                                                        <%}%>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <%=(user.Formateur).toString().replace('1','✔️').replace('0','❌')%>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <%=(user.GTournois).toString().replace('1','✔️').replace('0','❌')%>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <%=(user.Admin).toString().replace('1','✔️').replace('0','❌')%>
+                                        </td>
+                                        <td>
+                                            <%var s = new Date(user.createdAt).toLocaleDateString("us-US").split('-')%>
+                                                <%=s[2] + '/' +s[1]+'/' +s[0]%>
+                                        </td>
+                                    </tr>
+                                    <%});%>
+                        </table>
+                    </div>
+                </div>
+                <!-- Editable table -->
+
+            </div>
+        </div>
+
+
+
+
+        <%- include('bootstrap/script.ejs') %>
+
+            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+
+            <script>
+                $(document).ready(function() {
+                    $('#dtBasicExample').DataTable();
+                    $('.dataTables_length').addClass('bs-select');
+                });
+            </script>
+
+</body>
+
+</html>

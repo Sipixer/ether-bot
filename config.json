@@ -1,0 +1,25 @@
+{
+    "discord": {
+        "token": "ODIwMzYyOTUwOTc1MTYwMzYw.YE0EiQ.cwvK37No51ZmizET27LENysgOjU",
+        "activity": "FORTNITE",
+        "prefix": "!",
+        "logchannel": "851112396763168768"
+    },
+    "sql": {
+        "user": "etherbot",
+        "password": "ooip",
+        "database": "www"
+    },
+    "web": {
+        "port": 3005
+    },
+    "support_server": {
+        "id": "828017698457780255",
+        "post_formation": "832656425376808970",
+        "support_category": "847479292064694272"
+    },
+    "main_server": {
+        "id": "645639493939888158"
+
+    }
+}

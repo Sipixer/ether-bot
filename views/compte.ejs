@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Oui</title>
+    <%- include('bootstrap/style.ejs') %>
+        <link rel="stylesheet" type="text/css" href="/css/compte.css">
+</head>
+
+<body>
+    <%- include('includes/sidebar.ejs') %>
+
+        <div class="card-container">
+            <div class="card">
+                <div class="compte-container">
+                    <div class="Title">
+                        <h1>MON COMPTE</h1>
+                    </div>
+                    <div class="Pseudo">
+                        <p>Pseudo:
+                            <%=user.username%>
+                        </p>
+                        <p>E-mail:
+                            <%=user.mail%>
+                        </p>
+                        <p>Formateur:
+                            <%=(user.Formateur).toString().replace('1','✔️').replace('0','❌')%>
+                        </p>
+                        <p>Gérant Tournois:
+                            <%=(user.GTournois).toString().replace('1','✔️').replace('0','❌')%>
+                        </p>
+                        <p>Admin:
+                            <%=(user.Admin).toString().replace('1','✔️').replace('0','❌')%>
+                        </p>
+
+                    </div>
+
+                    <div class="Connexion">
+                        <h2>Connexion externe</h2>
+                        <div class="discord-link">
+                            <p>DISCORD</p>
+                            <div class="discord-linkacc">
+
+                                <p style="color:white;">
+                                    <% if(user.DiscordID == null){%>Non connecté
+                                        <%}else{ %>
+                                            <%=discordusername%>
+                                                <%}%>
+                                                    <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#Discordmodal" style="background-color: #6E85D3; margin-left: 5px;" role="button"><i class="fab fa-discord"></i></button>
+                                </p>
+
+
+
+
+                                <div class="modal fade" id="Discordmodal" tabindex="-1" aria-labelledby="Discordmodallabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="Discordmodallabel">Connexion à DISCORD <i class="fab fa-discord"></i></h5>
+                                                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body" style="margin-bottom: 10px;">
+                                                <p>Pour liéer sont compte Discord merci d'envoyé <strong style="color: black;">?link</strong> à <strong style="color: black;">EtherBot</strong> pour avoir les informations nécessaire.</p>
+                                                <div class="form-outline">
+
+                                                    <input type="text" id="discordcode" class="form-control" />
+                                                    <label class="form-label" for="discordcode">Discord code</label>
+                                                    <div class="form-helper">Ex: </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Fermer</button>
+                                                <button type="button" id="DiscordButton" onclick="DiscordLink()" class="btn btn-primary">Sauvegarder les changements</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="battle-link">
+                            <p>Battle net</p>
+                            <div class="battle-linkacc">
+
+                                <p style="color:white;">
+                                    <% if(user.BattleTag == null){%>Non connecté
+                                        <%}else{ %>
+                                            <%=(user.BattleTag).replace("-","#")%>
+                                                <%}%>
+                                                    <button class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#Battlenetmodal" style="background-color: #0E47A1; margin-left: 5px;" role="button"><i class="fab fa-battle-net"></i></button>
+                                </p>
+
+
+                                <!-- Modal BATTLE NET-->
+                                <div class="modal fade" id="Battlenetmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Connexion Battle Net <i class="fab fa-battle-net"></i></h5>
+                                                <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body" style="margin-bottom: 10px;">
+                                                <div class="form-outline">
+                                                    <input type="text" id="btg" class="form-control" />
+                                                    <label class="form-label" for="btg">Battle Tag</label>
+                                                    <div class="form-helper">Ex: cats#11481 (Attention aux majuscules)</div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Fermer</button>
+                                                <button type="button" id='BattleNetSaveButton' onclick="CheckBattleNet()" class="btn btn-primary">Sauvegarder les changements</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('bootstrap/script.ejs') %>
+
+            <script>
+                function CheckBattleNet() {
+                    SetBattleNetButton(true)
+                    var el = document.getElementById('btg');
+                    var btg = el.value.replace("#", "-")
+                    BtgRequest = new XMLHttpRequest();
+
+                    if (!BtgRequest) {
+                        alert('Abandon :( Impossible de créer une instance de XMLHTTP');
+                        SetBattleNetButton(false)
+                        return false;
+                    }
+                    BtgRequest.onreadystatechange = alertBattleNet;
+                    BtgRequest.open('GET', 'https://ow-api.com/v1/stats/pc/eu/' + btg + '/profile');
+                    BtgRequest.send();
+                }
+
+                function SetBattleNetButton(disable) {
+                    document.getElementById('BattleNetSaveButton').disabled = disable
+                }
+
+                function alertBattleNet() {
+                    if (BtgRequest.readyState === XMLHttpRequest.DONE) {
+                        if (BtgRequest.status === 200) {
+                            BattleNetLink((JSON.parse(BtgRequest.responseText).name).replace("#", "-"))
+                        } else {
+                            alert("Une erreur c'est produite, votre Battle Tag n'a pas été trouvé. Verifiez le et faite attention aux MAJUSCULES.");
+                            SetBattleNetButton(false)
+                        }
+                    }
+                }
+
+                function BattleNetLink(btg) {
+                    var data = "btg=" + btg;
+
+                    var BtgPost = new XMLHttpRequest();
+                    BtgPost.withCredentials = true;
+
+                    BtgPost.addEventListener("readystatechange", function() {
+                        if (this.readyState === 4) {
+                            alert(this.responseText)
+                            location.reload()
+                        }
+                    });
+
+                    BtgPost.open("POST", "/account/BattleNetLink");
+                    BtgPost.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                    BtgPost.send(data);
+                }
+
+                function DiscordLink() {
+                    SetDiscordButton(true)
+                    var data = "uuid=" + document.getElementById('discordcode').value;
+
+                    var DiscordPost = new XMLHttpRequest();
+                    DiscordPost.withCredentials = true;
+
+                    DiscordPost.addEventListener("readystatechange", function() {
+                        if (this.readyState === 4) {
+                            alert(this.responseText)
+                            location.reload()
+                        }
+                    });
+
+                    DiscordPost.open("POST", "/account/Discord");
+                    DiscordPost.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                    DiscordPost.send(data);
+                }
+
+                function SetDiscordButton(disable) {
+                    document.getElementById('DiscordButton').disabled = disable
+                }
+            </script>
+</body>
+
+</html>

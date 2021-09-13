@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ether Panel</title>
+    <%- include('bootstrap/style.ejs') %>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css" integrity="sha512-Cv93isQdFwaKBV+Z4X8kaVBYWHST58Xb/jVOcV9aRsGSArZsgAnFIhMpDoMDcFNoUtday1hdjn0nGp3+KZyyFw==" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <style>
+            .CreatorFormation {
+                margin-left: auto;
+                margin-right: auto;
+                padding-top: 100px;
+                width: 900px;
+            }
+            
+            .Box {
+                text-align: center;
+                width: 100%;
+                border-radius: 10px;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('includes/sidebar.ejs') %>
+        <div class="CreatorFormation">
+            <div class="Box">
+                <h1>
+                    Systeme de création de formation
+                </h1>
+                <% if(user.DiscordID){%>
+
+                    <div class="form-outline" style="margin-top: 40px;">
+                        <input type="text" id="Titre" class="form-control form-control-lg" maxlength="100" required />
+                        <label class="form-label" for="Titre">Titre de la formation</label>
+                    </div>
+
+                    <div style="padding-top: 10px;">
+                        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked />
+                        <label class="btn btn-secondary" for="option1"><span class="flag-icon flag-icon-fr"></span>FR</label>
+
+                        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off" />
+                        <label class="btn btn-secondary" for="option2"><span class="flag-icon flag-icon-gb"></span>EN</label>
+                    </div>
+                    <div class="form-outline">
+                        <textarea class="form-control" id="textAreaDescription" rows="4" maxlength="1500"></textarea>
+                        <label class="form-label" for="textAreaDescription">Description</label>
+                        <div class="form-helper">Utilisation des Markdowns discord autorisé. <a target="_blank" href="https://support.discord.com/hc/fr/articles/210298617-Bases-de-la-mise-en-forme-de-texte-Markdown-mise-en-forme-du-chat-gras-italique-soulign%C3%A9-">Plus d'info</a></div>
+                    </div>
+                    <div class="form-outline" style="margin-top: 50px;">
+                        <input type="text" id="Level" class="form-control form-control-lg" maxlength="20" required />
+                        <label class="form-label" for="Level">Niveau requis</label>
+                        <div class="form-helper">Ex: Débutant/Intermédiaire</div>
+                    </div>
+                    <div style="display: flex;margin-top: 50px; justify-content: space-around;">
+                        <div class="form-outline" style=" width: 200px;">
+                            <input type="number" id="Prix" value="0" class="form-control" required />
+                            <label class="form-label" for="Prix">Prix (en €)</label>
+                        </div>
+                        <div class="form-outline" style=" width: 200px;">
+                            <input type="number" id="Duree" class="form-control" required />
+                            <label class="form-label" for="Duree">Durée (en H)</label>
+                        </div>
+                    </div>
+
+                    <button style="margin-top: 50px;" type="button" onclick="CreateFormation()" class="btn btn-success">Créer la formation</button>
+
+                    <%}else{%>
+                        <h2>Erreur, votre compte discord doit être liée. <a href="/panel/compte">Mon Compte</a></h2>
+                        <%}%>
+            </div>
+
+
+        </div>
+
+
+
+
+        <%- include('bootstrap/script.ejs') %>
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+            <script>
+                function CreateFormation() {
+                    var Formation = new Object()
+                    Formation.nom = document.getElementById('Titre').value
+                    if (document.getElementById('option1').checked) {
+                        Formation.Langue = 'fr'
+                    } else {
+                        if (document.getElementById('option2').checked) {
+                            Formation.Langue = 'en'
+                        }
+                    }
+                    Formation.Description = document.getElementById('textAreaDescription').value
+                    Formation.Niveau = document.getElementById('Level').value
+                    Formation.Prix = document.getElementById('Prix').value
+                    Formation.Duree = document.getElementById('Duree').value
+
+
+                    console.log(Formation)
+
+                    let allAreFilled = true;
+                    document.querySelectorAll("[required]").forEach(function(i) {
+                        if (!allAreFilled) return;
+                        if (!i.value) allAreFilled = false;
+                    })
+                    if (!allAreFilled) {
+                        alert('Merci de remplir tous les champs requis.');
+                    } else {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("POST", "/formation/create", true);
+                        xhr.setRequestHeader("Content-type", "text/plain");
+                        xhr.send(JSON.stringify(Formation));
+                        alert('La formation est en cours de création...')
+                        window.location.href = "/panel/formateur/list";
+                    }
+                }
+            </script>
+</body>
+
+</html>

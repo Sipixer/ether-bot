@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ether Panel</title>
+    <%- include('bootstrap/style.ejs') %>
+        <style>
+            html,
+            body {
+                height: 100%;
+            }
+            
+            .grid-container {
+                display: grid;
+                grid-template-columns: 0.7fr 1.3fr 1.3fr 0.7fr;
+                grid-template-rows: 0.2fr 1.8fr 0.2fr;
+                gap: 0px 0px;
+                grid-template-areas: ". . . ."". TABLEAU TABLEAU ."". . . .";
+                height: 100%;
+            }
+            
+            .TABLEAU {
+                grid-area: TABLEAU;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('includes/sidebar.ejs') %>
+
+
+
+        <div class="grid-container">
+            <div class="TABLEAU">
+                <h1>Liste des tickets de
+                    <%=ticketof%>
+                </h1>
+                <% tickets.forEach(ticket => {%>
+
+
+                    <div class="card">
+                        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+                            Ticket n°
+                            <%=ticket.index %>
+                        </h3>
+                        <div class="card-body">
+                            <discord-messages>
+                                <% ticket.messages.forEach(msg => {%>
+                                    <discord-message author="<%=msg.author%>" avatar="<%=msg.authorimg%>">
+                                        <%=msg.content%>
+                                    </discord-message>
+                                    <%})%>
+                            </discord-messages>
+                        </div>
+                    </div>
+                    <%})%>
+            </div>
+        </div>
+        <!--
+        <discord-messages>
+            <discord-message author="Sanctuary" avatar="https://i.imgur.com/0TeacfY.png" role-color="#0099ff">
+                Hey,
+                <discord-mention>User</discord-mention> and
+                <discord-mention>Dawn</discord-mention>. Welcome to our server!
+            </discord-message>
+        </discord-messages>
+
+        
+-->
+        <script src="https://unpkg.com/wc-discord-message@^2.0.0/dist/wc-discord-message/wc-discord-message.js"></script>
+        <%- include('bootstrap/script.ejs') %>
+</body>
+
+</html>

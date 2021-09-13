@@ -1,0 +1,124 @@
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('../fonts/poppins/Poppins-Regular.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Bold;
+    src: url('../fonts/poppins/Poppins-Bold.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Medium;
+    src: url('../fonts/poppins/Poppins-Medium.ttf');
+}
+
+@font-face {
+    font-family: Montserrat-Bold;
+    src: url('../fonts/montserrat/Montserrat-Bold.ttf');
+}
+
+body,
+html {
+    width: 100%;
+    height: 100%;
+}
+
+.card-container {
+    font-family: Poppins-Bold, sans-serif;
+    background-color: #171135;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas: ". . . . ." ". Container Container Container ." ". Container Container Container ." ". Container Container Container ." ". . . . .";
+}
+
+.card {
+    grid-area: Container;
+    background-color: #252A62;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border-color: #252A62;
+}
+
+.compte-container {
+    width: 100%;
+    height: 100%;
+    color: rgb(255, 255, 255);
+    background-color: #252A62;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+    grid-template-areas: ". . Title Title Title Title . ." ". . . . . . . ." ". Pseudo Pseudo . . Connexion Connexion ." ". . . . . Connexion Connexion ." ". Mail Mail . . Connexion Connexion ." ". . . . . . . ." ". . . . . . . .";
+}
+
+.Title {
+    grid-area: Title;
+    text-align: center;
+    padding-top: 20px;
+}
+
+.Title h1 {
+    font-size: 25px;
+}
+
+.Pseudo {
+    grid-area: Pseudo;
+}
+
+.Pseudo p {
+    color: rgb(246, 253, 216);
+}
+
+.Mail {
+    grid-area: Mail;
+}
+
+.Connexion {
+    grid-area: Connexion;
+    background-color: rgb(65, 98, 160);
+    border-radius: 10px;
+    text-align: center;
+    height: 110%;
+}
+
+.Connexion h2 {
+    padding-top: 10px;
+}
+
+.discord-linkacc {
+    display: flexbox;
+    align-items: center;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.discord-link {
+    margin-top: 15px;
+    background-color: #304a7a;
+    padding-bottom: 1px;
+}
+
+.battle-linkacc {
+    display: flexbox;
+    align-items: center;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.battle-link {
+    margin-top: 15px;
+    background-color: #304a7a;
+    padding-bottom: 1px;
+}
+
+.modal-content {
+    color: black;
+}

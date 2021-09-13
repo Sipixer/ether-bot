@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ether Panel</title>
+    <%- include('bootstrap/style.ejs') %>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css" />
+        <style>
+            html,
+            body {
+                height: 100%;
+            }
+            
+            .grid-container {
+                display: grid;
+                grid-template-columns: 0.7fr 1.3fr 1.3fr 0.7fr;
+                grid-template-rows: 0.2fr 1.8fr 0.2fr;
+                gap: 0px 0px;
+                grid-template-areas: ". . . ."". TABLEAU TABLEAU ."". . . .";
+                height: 100%;
+            }
+            
+            .TABLEAU {
+                grid-area: TABLEAU;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('includes/sidebar.ejs') %>
+
+        <div class="grid-container">
+            <div class="TABLEAU">
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+                        Mes formations
+                    </h3>
+                    <div class="card-body">
+                        <table id="dtBasicExample" class="table" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="th-sm">#
+                                    </th>
+                                    <th class="th-sm">Nom
+                                    </th>
+                                    <th class="th-sm">Description
+                                    </th>
+                                    <th class="th-sm">Étudiants
+                                    </th>
+                                    <th class="th-sm">Inscription
+                                    </th>
+                                    <th class="th-sm">Modifier
+                                    </th>
+                                    <th class="th-sm">Envoyer Inscription
+                                    </th>
+                                    <th class="th-sm">Supprimer
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%formations.forEach(formation => {%>
+                                    <tr>
+                                        <th>
+                                            <%=formation.id %>
+                                        </th>
+                                        <th>
+                                            <%=formation.Nom%>
+                                        </th>
+                                        <th>
+                                            <%= formation.Description %>
+                                        </th>
+                                        <th>-
+                                        </th>
+                                        <th>
+                                            -
+                                        </th>
+                                        <th><button type="button" class="btn btn-outline-warning" data-mdb-ripple-color="dark">
+                                            Modifier
+                                          </button>
+                                        </th>
+                                        <th>
+                                            <% if(formation.MessageInscriptionID){%>
+                                                <%= formation.MessageInscriptionID%>
+                                                    <% }else{%>
+                                                        <button type="button" onclick="SendFormation('<%=formation.id %>')" class="btn btn-outline-info" data-mdb-ripple-color="dark">
+                                            Send to #formations
+                                          </button>
+                                                        <%}%>
+                                        </th>
+                                        <th>
+                                            <button type="button" onclick="Delete('<%=formation.id %>')" class="btn btn-outline-info" data-mdb-ripple-color="dark">
+                                            Delete
+                                          </button>
+                                        </th>
+                                    </tr>
+                                    <%});%>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Editable table -->
+
+            </div>
+        </div>
+
+        <%- include('bootstrap/script.ejs') %>
+</body>
+
+<script>
+    function SendFormation(FormationID) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/formation/send", true);
+        xhr.setRequestHeader("Content-type", "text/plain");
+        xhr.onload = function() {
+            alert('La formation a été posté dans le channel post formation.')
+            location.reload()
+        };
+        xhr.send(JSON.stringify(FormationID));
+    }
+
+    function Delete(FormationID) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/formation/delete", true);
+        xhr.setRequestHeader("Content-type", "text/plain");
+        xhr.onload = function() {
+            alert('La formation a été supprimé.')
+            location.reload()
+        };
+        xhr.send(JSON.stringify(FormationID));
+    }
+</script>
+
+</html>

@@ -1,0 +1,9 @@
+{
+    "847466573819543552": {
+        "reactions": {
+            "🏆": {
+                "Function": "support.newTicket(Member.user)"
+            }
+        }
+    }
+}

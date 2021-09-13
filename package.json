@@ -1,0 +1,37 @@
+{
+    "name": "ether-express",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "discord-fetch-all": "^3.0.2",
+        "discord.js": "^12.5.3",
+        "discord.js-pagination": "^1.0.3",
+        "ejs": "^3.1.6",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "i": "^0.3.6",
+        "install": "^0.13.0",
+        "jimp": "^0.16.1",
+        "moment": "^2.29.1",
+        "mysql": "^2.18.1",
+        "npm": "^7.9.0",
+        "pug-cli": "^1.0.0-alpha6",
+        "request": "^2.88.2",
+        "require-all": "^3.0.0",
+        "slugify": "^1.5.3",
+        "string-similarity": "^4.0.4",
+        "util.promisify": "^1.1.1",
+        "uuid": "^8.3.2"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon ./app.js --ignore database"
+    },
+    "author": "",
+    "license": "ISC"
+}

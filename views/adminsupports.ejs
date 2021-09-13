@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ether Panel</title>
+    <%- include('bootstrap/style.ejs') %>
+        <style>
+            html,
+            body {
+                height: 100%;
+            }
+            
+            .grid-container {
+                display: grid;
+                grid-template-columns: 0.7fr 1.3fr 1.3fr 0.7fr;
+                grid-template-rows: 0.2fr 1.8fr 0.2fr;
+                gap: 0px 0px;
+                grid-template-areas: ". . . ."". TABLEAU TABLEAU ."". . . .";
+                height: 100%;
+            }
+            
+            .TABLEAU {
+                grid-area: TABLEAU;
+            }
+        </style>
+</head>
+
+<body>
+    <%- include('includes/sidebar.ejs') %>
+
+        <div class="grid-container">
+            <div class="TABLEAU">
+                <div class="card">
+                    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">
+                        Personne ayant ouvert des tickets
+                    </h3>
+                    <div class="card-body">
+                        <table id="dtBasicExample" class="table" width="100%">
+                            <thead>
+                                <tr>
+                                    <th class="th-sm">#
+                                    </th>
+                                    <th class="th-sm">Pseudo
+                                    </th>
+                                    <th class="th-sm">Nombre de ticket
+                                    </th>
+                                    <th class="th-sm">Ouvert ?
+                                    </th>
+                                    <th class="th-sm">Afficher
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% AllTicketList.forEach(ticket => {%>
+                                    <tr>
+                                        <td>
+                                            <%= ticket.id%>
+                                        </td>
+                                        <td>
+                                            <%= ticket.username%>
+                                        </td>
+                                        <td>
+                                            <%= ticket.length%>
+                                        </td>
+                                        <td>
+                                            <%= ticket.open%>
+                                        </td>
+                                        <td>
+                                            <a href="/panel/admin/support/<%= ticket.id%>">Acceder</a>
+                                        </td>
+                                    </tr>
+                                    <%});%>
+                        </table>
+                    </div>
+                </div>
+                <!-- Editable table -->
+
+            </div>
+        </div>
+
+
+        <%- include('bootstrap/script.ejs') %>
+            <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+
+</body>
+
+</html>

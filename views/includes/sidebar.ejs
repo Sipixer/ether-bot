@@ -1,0 +1,79 @@
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/fonts/icomoon/style.css">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+<!-- Style -->
+<link rel="stylesheet" href="/css/sidebar.css">
+
+
+
+
+
+<aside class="sidebar">
+    <div class="toggle">
+        <a href="#" class="burger js-menu-toggle" data-toggle="collapse" data-target="#main-navbar">
+            <span></span>
+        </a>
+    </div>
+    <div class="side-inner">
+
+        <div class="profile">
+            <img src="/images/Logo/Logo-sans-fond.png" alt="Image" class="img-fluid">
+            <h3 class="ethername">Ether Esport</h3>
+            <span class="username"><%=user.username%></span>
+        </div>
+
+
+
+        <div class="nav-menu">
+            <ul>
+                <li><a href="/panel/home"><span class="icon-home mr-3"></span>Home</a></li>
+                <li><a href="/panel/compte"><span class="icon-user mr-3"></span>Mon compte</a></li>
+                <% if(user.Admin == 1 || user.Formateur == 1){ %>
+                    <li class="accordion">
+                        <a href="#" data-toggle="collapse" data-target="#collapseFormateur" aria-expanded="false" aria-controls="collapseOne" class="collapsible">
+                            <span class="icon-file-text mr-3"></span>Formateur
+                        </a>
+                        <div id="collapseFormateur" class="collapse" aria-labelledby="headingOne">
+                            <div>
+                                <ul>
+                                    <li><a href="/panel/formateur/create"><span class="icon-plus mr-3"></span>Créer une formation</a></li>
+                                    <li><a href="/panel/formateur/list"><span class="icon-list mr-3"></span>Mes formations</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <%}%>
+                        <% if(user.Admin == 1){ %>
+                            <li class="accordion">
+                                <a href="#" data-toggle="collapse" data-target="#collapseAdmin" aria-expanded="false" aria-controls="collapseOne" class="collapsible">
+                                    <span class="icon-database mr-3"></span>ADMIN
+                                </a>
+                                <div id="collapseAdmin" class="collapse" aria-labelledby="headingOne">
+                                    <div>
+                                        <ul>
+                                            <li><a href="/panel/admin/comptes"><span class="icon-users mr-3"></span>Comptes</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div id="collapseAdmin" class="collapse" aria-labelledby="headingOne">
+                                    <div>
+                                        <ul>
+                                            <li><a href="/panel/admin/support"><span class="icon-ticket mr-3"></span>Support</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <%}%>
+
+                                <li><a href="/loggout"><span class="icon-sign-out mr-3"></span>Déconnexion</a></li>
+            </ul>
+        </div>
+    </div>
+</aside>
